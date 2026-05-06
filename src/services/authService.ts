@@ -2,6 +2,7 @@ import * as userRepository from "../repositories/userRepository.js";
 import { hashSenha, compararSenha } from "../utils/hash.js";
 import { gerarToken } from "../utils/token.js";
 
+
 export const register = async (data: any) => {
     const existe = await userRepository.findByEmail(data.email);
 
@@ -40,4 +41,4 @@ export const login = async (email: string, senha: string) => {
 
     return { token };
 };
-export const authService = new AuthService(authRepository)
+// export const authService = new AuthService(authRepository)
