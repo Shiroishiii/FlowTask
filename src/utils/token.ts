@@ -1,9 +1,11 @@
 import jwt from "jsonwebtoken";
 
-const SECRET = process.env.JWT_SECRET!;
+const SECRET = process.env.JWT_SECRET as string;
 
 export const gerarToken = (payload: any) => {
-    return jwt.sign(payload, SECRET, { expiresIn: "1d" });
+    return jwt.sign(payload, SECRET, { 
+        expiresIn: "1d" 
+    });
 };
 
 export const verificarToken = (token: string) => {
