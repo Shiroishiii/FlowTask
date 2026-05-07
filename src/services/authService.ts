@@ -45,7 +45,6 @@ export class AuthService {
             tipo_conta: usuario.tipo_conta
         });
 
-        // 🔥 SALVANDO TOKEN NO BANCO
         await this.authRepository.salvarToken({
             token,
             usuarioId: usuario.id,
