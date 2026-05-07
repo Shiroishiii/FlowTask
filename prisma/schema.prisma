@@ -1,0 +1,94 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+   url = env("DATABASE_URL")
+}
+
+
+enum TypePrioridade {
+  ADIAVEl
+  NORMAL
+  URGENTE
+}
+
+enum TypeStatus {
+  PENDENTE
+  ANDAMENTO
+  CONCLUIDO
+}
+
+enum TipoConta {
+  USER
+  ADMIN
+}
+
+enum TypeToken {
+  ACESS
+  REFRESH
+}
+
+model Usuario {
+  id        Int        @id @default(autoincrement())
+  nome      String
+  email     String     @unique
+  senha     String
+  tokens    Token[]
+  tipo_conta TipoConta @default(USER)
+
+  tarefas   Tarefa[]
+  projetos  Projeto[]
+
+  @@map("usuario")
+}
+
+model Tarefa {
+  id Int @id @default(autoincrement())
+  titulo String 
+  descricao String
+  data_vencimento DateTime
+  prioridade TypePrioridade @default(NORMAL)
+  status TypeStatus @default(PENDENTE)
+
+  usuarioId Int
+  usuario Usuario @relation(fields: [usuarioId], references: [id])
+
+  projetoId Int
+  projeto Projeto @relation(fields: [projetoId], references: [id])
+
+  @@map("tarefa")
+}
+
+model Projeto {
+  id Int @id @default(autoincrement())
+  titulo String
+  area_de_conhecimento String?
+  metas_projeto String
+  tarefas Tarefa[]
+
+  usuarioId Int
+  usuario Usuario @relation(fields:[usuarioId], references: [id])
+
+  @@map("projeto")
+
+}
+
+model Token {
+ id Int @id @default(autoincrement())
+ token String @db.VarChar(255)
+ tipo TypeToken @default(ACESS)
+ revoked Boolean @default(false)
+ expiresAt DateTime
+ 
+ usuarioId Int
+ usuario Usuario @relation(fields:[usuarioId], references:[id])
+
+ @@map("token")
+}
