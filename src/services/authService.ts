@@ -53,4 +53,12 @@ export class AuthService {
 
         return { token };
     }
+
+    async logout(token: string){
+        await this.authRepository.revogarToken(token)
+
+        return {
+            message: "logout realizado"
+        }
+    }
 }

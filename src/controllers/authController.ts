@@ -26,8 +26,24 @@ class AuthController {
             const result = await authService.login(email, senha);
             return res.json(result);
         } catch (err: any) {
-            return res.status(400).json({ erro: err.message });
+            return res.status(400).json({ 
+                erro: err.message 
+            })
         }
+    }
+
+    async logout(req: Request, res: Response){
+        try{
+            const header = req.headers.authorization!;
+            const token = header.slice("Bearer".length);
+            const result = await authService.logout(token)
+            return res.json(result)
+        } catch(err: any) {
+            return res.status(400).json({
+                erro: err.message
+            })
+        }
+        
     }
 }
 

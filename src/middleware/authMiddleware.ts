@@ -1,10 +1,11 @@
+import  { authRepository } from "../repositories/authRepository.js";
 import { verificarToken } from "../utils/token.js";
 import type {
     Response, Request, NextFunction
 } from "express";
 
 
-export function auth(req: Request, res: Response, next: NextFunction) {
+export async function auth(req: Request, res: Response, next: NextFunction) {
     const header = req.headers.authorization;
 
     if (!header?.startsWith("Bearer ")) {
@@ -15,14 +16,15 @@ export function auth(req: Request, res: Response, next: NextFunction) {
     try {
         const token = header.slice("Bearer ".length)
         const payload = verificarToken(token)
-
         if (!payload) {
             return res.status(401).json({
             error: "invalid token"
         })
     }
        (req as any).user = payload;
+
        next()
+
     } catch {
         return res.status(401).json({
             error: "invalid or expired token"
