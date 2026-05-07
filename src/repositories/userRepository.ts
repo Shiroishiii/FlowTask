@@ -1,5 +1,6 @@
-import type { PrismaClient, Usuario } from "@prisma/client";
+import type { PrismaClient } from "@prisma/client";
 import prisma from "../prisma/client.js";
+import type { Usuario } from "@prisma/client/wasm";
 
 export class UserRepository {
     constructor(private readonly prisma: PrismaClient) {
@@ -43,15 +44,3 @@ export class UserRepository {
 
 
 export const userRepository = new UserRepository(prisma);
-
-export function getUserEmail(email: any) {
-    throw new Error("Function not implemented.");
-}
-export function createUser(arg0: { nome: any; email: any; senha: string; }) {
-    throw new Error("Function not implemented.");
-}
-
-export function findByEmail(email: string) {
-    throw new Error("Function not implemented.");
-}
-
