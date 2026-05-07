@@ -30,7 +30,7 @@ enum TipoConta {
 }
 
 enum TypeToken {
-  ACESS
+  ACCESS
   REFRESH
 }
 
@@ -47,8 +47,11 @@ model Usuario {
   tokens     Token[]
   tipo_conta TipoConta @default(USER)
 
-  tarefas  Tarefa[]
+  tarefas Tarefa[] @relation("UsuariosTarefas")
+
   projetos Projeto[]
+
+  criado_em DateTime @default(now())
 
   @@map("usuario")
 }
@@ -61,11 +64,12 @@ model Tarefa {
   prioridade      TypePrioridade @default(NORMAL)
   status          TypeStatus     @default(PENDENTE)
 
-  usuarioId Int
-  usuario   Usuario @relation(fields: [usuarioId], references: [id])
+  usuarios Usuario[] @relation("UsuariosTarefas")
 
   projetoId Int
   projeto   Projeto @relation(fields: [projetoId], references: [id])
+
+  criado_em DateTime @default(now())
 
   @@map("tarefa")
 }
@@ -74,7 +78,8 @@ model Projeto {
   id                   Int      @id @default(autoincrement())
   titulo               String
   area_de_conhecimento String?
-  metas_projeto        String
+  descricao            String
+  objetivo             String
   tarefas              Tarefa[]
 
   usuarioId Int
@@ -86,7 +91,7 @@ model Projeto {
 model Token {
   id        Int       @id @default(autoincrement())
   token     String    @db.VarChar(255)
-  tipo      TypeToken @default(ACESS)
+  tipo      TypeToken @default(ACCESS)
   revoked   Boolean   @default(false)
   expiresAt DateTime
 
