@@ -9,9 +9,8 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-   url = env("DATABASE_URL")
+  url      = env("DATABASE_URL")
 }
-
 
 enum TypePrioridade {
   ADIAVEl
@@ -31,64 +30,68 @@ enum TipoConta {
 }
 
 enum TypeToken {
-  ACESS
+  ACCESS
   REFRESH
 }
 
 model Usuario {
-  id        Int        @id @default(autoincrement())
-  nome      String
-  email     String     @unique
-  senha     String
-  tokens    Token[]
-  tipo_conta TipoConta @default(USER)
+  id         Int       @id @default(autoincrement())
+  nome       String
+  email      String    @unique
+  senha      String
+  tokens     Token[]
+  role TipoConta @default(USER)
 
-  tarefas   Tarefa[]
-  projetos  Projeto[]
+  tarefas Tarefa[] @relation("UsuariosTarefas")
+
+  projetos Projeto[]
+
+  criado_em DateTime @default(now())
 
   @@map("usuario")
 }
 
 model Tarefa {
-  id Int @id @default(autoincrement())
-  titulo String 
-  descricao String
+  id              Int            @id @default(autoincrement())
+  titulo          String
+  descricao       String
   data_vencimento DateTime
-  prioridade TypePrioridade @default(NORMAL)
-  status TypeStatus @default(PENDENTE)
+  prioridade      TypePrioridade @default(NORMAL)
+  status          TypeStatus     @default(PENDENTE)
 
-  usuarioId Int
-  usuario Usuario @relation(fields: [usuarioId], references: [id])
+  usuarios Usuario[] @relation("UsuariosTarefas")
 
   projetoId Int
-  projeto Projeto @relation(fields: [projetoId], references: [id])
+  projeto   Projeto @relation(fields: [projetoId], references: [id])
+
+  criado_em DateTime @default(now())
 
   @@map("tarefa")
 }
 
 model Projeto {
-  id Int @id @default(autoincrement())
-  titulo String
+  id                   Int      @id @default(autoincrement())
+  titulo               String
   area_de_conhecimento String?
-  metas_projeto String
-  tarefas Tarefa[]
+  descricao            String
+  objetivo             String
+  tarefas              Tarefa[]
 
   usuarioId Int
-  usuario Usuario @relation(fields:[usuarioId], references: [id])
+  usuario   Usuario @relation(fields: [usuarioId], references: [id])
 
   @@map("projeto")
-
 }
 
 model Token {
- id Int @id @default(autoincrement())
- token String @db.VarChar(255)
- tipo TypeToken @default(ACESS)
- revoked Boolean @default(false)
- expiresAt DateTime
- 
- usuarioId Int
- usuario Usuario @relation(fields:[usuarioId], references:[id])
+  id        Int       @id @default(autoincrement())
+  token     String    @db.VarChar(255)
+  tipo      TypeToken @default(ACCESS)
+  revoked   Boolean   @default(false)
+  expiresAt DateTime
 
- @@map("token")
+  usuarioId Int
+  usuario   Usuario @relation(fields: [usuarioId], references: [id])
+
+  @@map("token")
 }
