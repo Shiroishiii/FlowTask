@@ -40,12 +40,12 @@ enum Role {
 }
 
 model Usuario {
-  id         Int       @id @default(autoincrement())
-  nome       String
-  email      String    @unique
-  senha      String
-  tokens     Token[]
-  tipo_conta TipoConta @default(USER)
+  id     Int       @id @default(autoincrement())
+  nome   String
+  email  String    @unique
+  senha  String
+  tokens Token[]
+  role   TipoConta @default(USER)
 
   tarefas  Tarefa[]
   projetos Projeto[]
