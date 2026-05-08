@@ -34,18 +34,13 @@ enum TypeToken {
   REFRESH
 }
 
-enum Role {
-  ADMIN
-  USER
-}
-
 model Usuario {
   id         Int       @id @default(autoincrement())
   nome       String
   email      String    @unique
   senha      String
   tokens     Token[]
-  tipo_conta TipoConta @default(USER)
+  role TipoConta @default(USER)
 
   tarefas Tarefa[] @relation("UsuariosTarefas")
 

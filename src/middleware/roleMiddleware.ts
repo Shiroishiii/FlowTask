@@ -2,10 +2,10 @@ import { verificarToken } from "../utils/token.js";
 import type {
     Response, Request, NextFunction, 
 } from "express";
-import type { Role } from "../hello-prisma/generated/prisma/enums.js";
+import type { TipoConta } from "@prisma/client";
 
 
-export function roleMiddleware(roles: Role[]) {
+export function roleMiddleware(roles: TipoConta[]) {
     return (req: Request, res: Response, next: NextFunction) => {
 
         const header = req.headers.authorization;
