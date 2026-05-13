@@ -40,14 +40,10 @@ model Usuario {
   email      String    @unique
   senha      String
   tokens     Token[]
-  role TipoConta @default(USER)
-
+  role   TipoConta @default(USER)
   tarefas Tarefa[] @relation("UsuariosTarefas")
-
   projetos Projeto[]
-
   criado_em DateTime @default(now())
-
   @@map("usuario")
 }
 
