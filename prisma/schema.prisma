@@ -41,6 +41,7 @@ model Usuario {
   senha      String
   tokens     Token[]
   role   TipoConta @default(USER)
+  
   tarefas Tarefa[] @relation("UsuariosTarefas")
   projetos Projeto[]
   criado_em DateTime @default(now())
