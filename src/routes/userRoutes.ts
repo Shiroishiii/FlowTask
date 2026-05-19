@@ -17,5 +17,7 @@ usuarioRouter.get("/teste", auth, roleMiddleware([TipoConta.ADMIN]), async (req,
     return res.json({
         ok: true
     });
-}
-);
+});
+usuarioRouter.get("/me", auth, async (req, res) => {
+    return userController.getProfile(req, res); 
+});

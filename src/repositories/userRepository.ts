@@ -18,11 +18,16 @@ export class UserRepository {
         });
     }
 
-    async getUserId(id: number): Promise<Usuario | null> {
+    async getUserId(id: number) {
         return this.prisma.usuario.findUnique({
             where: { 
                 id 
-            }
+            },
+            select: {
+                id: true,
+                email: true,
+                role: true
+            }   
         });
     }
 
@@ -32,12 +37,18 @@ export class UserRepository {
         });
     }
 
-    async updateUser(id: number, data: Partial<Usuario>): Promise<Usuario> {
+    async updateUser(id: number, data: Partial<Usuario>){
         return this.prisma.usuario.update({
             where: {
                 id 
             },
-            data
+            data,
+            select : {
+                id: true,
+                nome: true,
+                email: true,
+                role: true
+            }
         });
     }
 }    
