@@ -1,7 +1,7 @@
 import { TipoConta } from "@prisma/client";
-import { verificarToken,  type TokenPayload } from "../utils/token.js";
+import { verificarToken, type TokenPayload } from "../utils/token.js";
 import type {
-    Response, Request, NextFunction, 
+    Response, Request, NextFunction,
 } from "express";
 
 
@@ -14,7 +14,7 @@ export function roleMiddleware(roles: TipoConta[]) {
         if (!header?.startsWith("Bearer ")) {
             return res.status(401).json({
                 error: "missing token"
-            
+
             })
         }
         try {
@@ -25,13 +25,15 @@ export function roleMiddleware(roles: TipoConta[]) {
                     error: "invalid token"
                 })
             }
-             if (!roles.includes(payload.role)) {
+            if (!roles.includes(payload.role)) {
                 return res.status(403).json({
                     error: "Access denied"
                 });
             }
 
-            (req as any).user = payload;
+            (req as Request & {
+                user: TokenPayload
+            }).user = payload;
 
             next()
 
