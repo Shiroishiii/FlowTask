@@ -3,20 +3,20 @@ import prisma from "../prisma/client.js";
 import type { Usuario } from "@prisma/client/wasm";
 
 export class UserRepository {
-    constructor(private readonly prisma: PrismaClient) {
-        this.prisma = prisma
-    }
- async listUsers(): Promise<Usuario[]> {
-        return this.prisma.usuario.findMany();
-    }
+  constructor(private readonly prisma: PrismaClient) {
+    this.prisma = prisma;
+  }
+  async listUsers(): Promise<Usuario[]> {
+    return this.prisma.usuario.findMany();
+  }
 
-    async getUserEmail(email: string): Promise<Usuario | null> {
-        return this.prisma.usuario.findUnique({
-            where: { 
-                email 
-            }
-        });
-    }
+  async getUserEmail(email: string): Promise<Usuario | null> {
+    return this.prisma.usuario.findUnique({
+      where: {
+        email,
+      },
+    });
+  }
 
     async getUserId(id: number) {
         return this.prisma.usuario.findUnique({
@@ -26,6 +26,7 @@ export class UserRepository {
             select: {
                 id: true,
                 email: true,
+           
                 role: true
             }   
         });
