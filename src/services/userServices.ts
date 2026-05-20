@@ -12,5 +12,8 @@ export class UserService {
     async getUserId(userId: number) {
         return this.userRepository.getUserId(userId);
     }
+        async updateUser(userId: number, data: any) {
+        return this.userRepository.updateUser(userId, data);
+    }
 }
 export const userService = new UserService(userRepository);
