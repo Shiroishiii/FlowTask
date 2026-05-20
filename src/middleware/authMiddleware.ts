@@ -1,4 +1,4 @@
-import  { authRepository } from "../repositories/authRepository.js";
+import { authRepository } from "../repositories/authRepository.js";
 import { verificarToken } from "../utils/token.js";
 import type {
     Response, Request, NextFunction
@@ -18,12 +18,14 @@ export async function auth(req: Request, res: Response, next: NextFunction) {
         const payload = verificarToken(token)
         if (!payload) {
             return res.status(401).json({
-            error: "invalid token"
-        })
-    }
-       (req as any).user = payload;
+                error: "invalid token"
+            })
+        }
+        (req as Request & {
+            user: typeof payload
+        }).user = payload;
 
-       next()
+        next()
 
     } catch {
         return res.status(401).json({
