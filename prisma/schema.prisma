@@ -41,10 +41,10 @@ model Usuario {
   senha      String
   tokens     Token[]
   role   TipoConta @default(USER)
-  
   tarefas Tarefa[] @relation("UsuariosTarefas")
   projetos Projeto[]
   criado_em DateTime @default(now())
+  historicos HistoricoTarefa[]
   @@map("usuario")
 }
 
@@ -62,6 +62,8 @@ model Tarefa {
   projeto   Projeto @relation(fields: [projetoId], references: [id])
 
   criado_em DateTime @default(now())
+
+  historicos HistoricoTarefa[]
 
   @@map("tarefa")
 }
@@ -91,4 +93,16 @@ model Token {
   usuario   Usuario @relation(fields: [usuarioId], references: [id])
 
   @@map("token")
+}
+
+model HistoricoTarefa {
+  id        Int      @id @default(autoincrement())
+  acao      String
+  timestamp DateTime @default(now())
+
+  usuarioId Int
+  tarefaId  Int
+
+  usuario Usuario @relation(fields: [usuarioId], references: [id])
+  tarefa  Tarefa  @relation(fields: [tarefaId], references: [id])
 }
