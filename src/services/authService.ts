@@ -2,7 +2,7 @@ import { UserRepository } from "../repositories/userRepository.js";
 import { AuthRepository } from "../repositories/authRepository.js";
 import { hashSenha, compararSenha } from "../utils/hash.js";
 import { gerarToken } from "../utils/token.js";
-import type {TokenPayload } from "../utils/token.js";
+
 
 export class AuthService {
     constructor(
@@ -22,7 +22,7 @@ export class AuthService {
         const usuario = await this.userRepository.createUser({
             nome: data.nome,
             email: data.email,
-            role: data.tipo_conta,
+            role: data.role,
             senha: senhaHash
         });
 

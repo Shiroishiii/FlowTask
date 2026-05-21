@@ -1,6 +1,6 @@
 import type { PrismaClient } from "@prisma/client";
 import {  userRepository, type UserRepository } from "../repositories/userRepository.js";
-import prisma from "../prisma/client.js";
+import prisma from "../../prisma/client.js";
 
 export class UserService {
     constructor( private userRepository: UserRepository) {}
@@ -12,7 +12,7 @@ export class UserService {
     async getUserId(userId: number) {
         return this.userRepository.getUserId(userId);
     }
-        async updateUser(userId: number, data: any) {
+    async updateUser(userId: number, data: any) {
         return this.userRepository.updateUser(userId, data);
     }
 }
