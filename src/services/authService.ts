@@ -3,6 +3,7 @@ import { AuthRepository } from "../repositories/authRepository.js";
 import { hashSenha, compararSenha } from "../utils/hash.js";
 import { gerarToken } from "../utils/token.js";
 
+
 export class AuthService {
     constructor(
         private userRepository: UserRepository,
@@ -21,6 +22,7 @@ export class AuthService {
         const usuario = await this.userRepository.createUser({
             nome: data.nome,
             email: data.email,
+            role: data.role,
             senha: senhaHash
         });
 
@@ -42,7 +44,7 @@ export class AuthService {
 
         const token = gerarToken({
             id: usuario.id,
-            tipo_conta: usuario.tipo_conta
+            role: usuario.role
         });
 
         await this.authRepository.salvarToken({
@@ -52,5 +54,13 @@ export class AuthService {
         });
 
         return { token };
+    }
+
+    async logout(token: string){
+        await this.authRepository.revogarToken(token)
+
+        return {
+            message: "logout realizado"
+        }
     }
 }
