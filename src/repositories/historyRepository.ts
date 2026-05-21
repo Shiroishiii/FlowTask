@@ -1,5 +1,5 @@
 import prisma from "../prisma/client";
-import { TipoAcaoHistorico } from "@prisma/client";
+
 
 interface CreateHistoryDTO {
   acao: TipoAcaoHistorico;
