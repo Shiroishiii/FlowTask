@@ -13,8 +13,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use("/", taskRouter);
-app.use("/auth", authRouter);
-app.use("/usuarios", usuarioRouter);
+app.use("/", authRouter);
+app.use("/", usuarioRouter);
 const PORT = process.env.PORT || 3000
 
 app.listen(PORT, () => {

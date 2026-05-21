@@ -13,10 +13,23 @@ export class UserController {
         } catch (error) {
             console.log(error)
             return res.status(400).json({
-                error
+                error: String(error)
             });
         }
-    };
+    }
+
+    async admin(req: Request, res: Response) {
+        try {
+            return res.status(200).json({
+                mensagem: "Acesso permitido apenas para administradores"
+            });
+        } catch (error) {
+            console.log(error);
+            return res.status(404).json({
+                error: String(error)
+            });
+        }
+    }
 
     async getUserId(req: Request, res: Response) {
         try {
@@ -25,7 +38,7 @@ export class UserController {
             return res.status(200).json(user);
         } catch (error) {
             return res.status(400).json({
-                error
+                error: String(error)
             });
         }
     }

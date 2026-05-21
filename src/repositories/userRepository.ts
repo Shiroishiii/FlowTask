@@ -26,7 +26,6 @@ export class UserRepository {
             select: {
                 id: true,
                 email: true,
-           
                 role: true
             }   
         });
