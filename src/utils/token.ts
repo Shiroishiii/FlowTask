@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
-import { TipoConta } from "@prisma/client";
+import type { TipoConta } from "../middleware/generated/prisma/enums.js";
+
 
 
 const SECRET = process.env.JWT_SECRET as string;

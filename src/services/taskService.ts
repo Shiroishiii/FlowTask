@@ -1,5 +1,6 @@
+import type { TypePrioridade, TypeStatus } from "../middleware/generated/prisma/enums.js";
 import {taskRepository,type TaskRepository,} from "../repositories/taskRepository.js";
-import type { TypeStatus, TypePrioridade } from "@prisma/client";
+
 
 type CriarTarefaData = {
   titulo: string;

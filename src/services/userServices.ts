@@ -1,6 +1,5 @@
-import type { PrismaClient } from "@prisma/client";
 import {  userRepository, type UserRepository } from "../repositories/userRepository.js";
-import prisma from "../prisma/client.js";
+
 
 export class UserService {
     constructor( private userRepository: UserRepository) {}

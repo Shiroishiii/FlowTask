@@ -1,5 +1,6 @@
-import type { Projeto } from "@prisma/client"
+
 import type { PrismaClient } from "@prisma/client/extension"
+import type { Projeto } from "../middleware/generated/prisma/browser.js";
 
 
     export class ProjectRepository{

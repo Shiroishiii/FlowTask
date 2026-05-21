@@ -1,6 +1,7 @@
 import type { PrismaClient } from "@prisma/client";
 import prisma from "../prisma/client.js";
-import type { Usuario } from "@prisma/client/wasm";
+import type { Usuario } from "../middleware/generated/prisma/browser.js";
+
 
 export class UserRepository {
   constructor(private readonly prisma: PrismaClient) {
