@@ -1,4 +1,4 @@
-import { TipoConta } from "@prisma/client";
+import type { TipoConta } from "../prisma/generated/prisma/enums.js";
 import { verificarToken, type TokenPayload } from "../utils/token.js";
 import type {
     Response, Request, NextFunction,

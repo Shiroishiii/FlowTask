@@ -10,7 +10,7 @@
 */
 
 export const TypePrioridade = {
-  ADIAVEl: 'ADIAVEl',
+  ADIAVEL: 'ADIAVEL',
   NORMAL: 'NORMAL',
   URGENTE: 'URGENTE'
 } as const
@@ -36,8 +36,20 @@ export type TipoConta = (typeof TipoConta)[keyof typeof TipoConta]
 
 
 export const TypeToken = {
-  ACESS: 'ACESS',
+  ACCESS: 'ACCESS',
   REFRESH: 'REFRESH'
 } as const
 
 export type TypeToken = (typeof TypeToken)[keyof typeof TypeToken]
+
+
+export const TipoAcaoHistorico = {
+  CRIACAO: 'CRIACAO',
+  EDICAO: 'EDICAO',
+  ATRIBUICAO: 'ATRIBUICAO',
+  CONCLUSAO: 'CONCLUSAO',
+  REABERTURA: 'REABERTURA',
+  EXCLUSAO: 'EXCLUSAO'
+} as const
+
+export type TipoAcaoHistorico = (typeof TipoAcaoHistorico)[keyof typeof TipoAcaoHistorico]

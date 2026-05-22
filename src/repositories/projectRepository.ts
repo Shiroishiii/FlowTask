@@ -1,5 +1,5 @@
 import type { Projeto, PrismaClient } from "@prisma/client";
-import prisma from "../../prisma/client.js";
+import prisma from "../prisma/client.js";
 
   export class ProjectRepository {
 

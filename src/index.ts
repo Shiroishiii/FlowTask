@@ -5,7 +5,7 @@ import { authRouter } from "./routes/authRoutes.js";
 import { projectRouter } from "./routes/projectRoutes.js";
 import { taskRouter } from "./routes/taskRoutes.js";
 import { usuarioRouter } from "./routes/userRoutes.js";
-import historyRoutes from "./routes/historyRoutes.js";
+import historyRoutes  from "./routes/historyRoutes.js";
 
 dotenv.config();
 
@@ -18,7 +18,7 @@ app.use("/", projectRouter)
 app.use("/", taskRouter);
 app.use("/", authRouter);
 app.use("/", usuarioRouter);
-app.use(historyRoutes);
+app.use("/", historyRoutes);
 
 const PORT = process.env.PORT || 3000
 

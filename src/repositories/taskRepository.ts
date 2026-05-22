@@ -1,7 +1,9 @@
-import type { PrismaClient, TypeStatus } from "@prisma/client";
-import prisma from "../../prisma/client.js";
+import type { PrismaClient } from "@prisma/client";
+
 import prisma from "../prisma/client.js";
-import type { Tarefa } from "@prisma/client";
+import type { Tarefa, TypeStatus } from "../prisma/generated/prisma/browser.js";
+
+
 
 export class TaskRepository {
   constructor(private readonly prisma: PrismaClient) {}

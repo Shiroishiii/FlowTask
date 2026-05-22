@@ -54,7 +54,8 @@ export const ModelName = {
   Usuario: 'Usuario',
   Tarefa: 'Tarefa',
   Projeto: 'Projeto',
-  Token: 'Token'
+  Token: 'Token',
+  HistoricoTarefa: 'HistoricoTarefa'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -78,7 +79,8 @@ export const UsuarioScalarFieldEnum = {
   nome: 'nome',
   email: 'email',
   senha: 'senha',
-  tipo_conta: 'tipo_conta'
+  role: 'role',
+  criado_em: 'criado_em'
 } as const
 
 export type UsuarioScalarFieldEnum = (typeof UsuarioScalarFieldEnum)[keyof typeof UsuarioScalarFieldEnum]
@@ -91,8 +93,8 @@ export const TarefaScalarFieldEnum = {
   data_vencimento: 'data_vencimento',
   prioridade: 'prioridade',
   status: 'status',
-  usuarioId: 'usuarioId',
-  projetoId: 'projetoId'
+  projetoId: 'projetoId',
+  criado_em: 'criado_em'
 } as const
 
 export type TarefaScalarFieldEnum = (typeof TarefaScalarFieldEnum)[keyof typeof TarefaScalarFieldEnum]
@@ -102,7 +104,8 @@ export const ProjetoScalarFieldEnum = {
   id: 'id',
   titulo: 'titulo',
   area_de_conhecimento: 'area_de_conhecimento',
-  metas_projeto: 'metas_projeto',
+  descricao: 'descricao',
+  objetivo: 'objetivo',
   usuarioId: 'usuarioId'
 } as const
 
@@ -119,6 +122,18 @@ export const TokenScalarFieldEnum = {
 } as const
 
 export type TokenScalarFieldEnum = (typeof TokenScalarFieldEnum)[keyof typeof TokenScalarFieldEnum]
+
+
+export const HistoricoTarefaScalarFieldEnum = {
+  id: 'id',
+  acao: 'acao',
+  timestamp: 'timestamp',
+  usuarioId: 'usuarioId',
+  tarefaId: 'tarefaId',
+  descricao: 'descricao'
+} as const
+
+export type HistoricoTarefaScalarFieldEnum = (typeof HistoricoTarefaScalarFieldEnum)[keyof typeof HistoricoTarefaScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -1,7 +1,9 @@
 import type { Request, Response } from "express";
 import { userService, type UserService } from "../services/userServices.js";
 import bcrypt from "bcrypt";
-import type { TipoConta, Usuario } from "@prisma/client";
+import type { TipoConta } from "../prisma/generated/prisma/enums.js";
+import type { Usuario } from "../prisma/generated/prisma/browser.js";
+
 
 export class UserController {
     constructor(private userService: UserService) { }
