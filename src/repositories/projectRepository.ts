@@ -28,7 +28,6 @@ import type { Projeto } from "../prisma/generated/prisma/browser.js";
         return this.prisma.projeto.create({
             data
         });
-
     }
 
     async updateProject(
