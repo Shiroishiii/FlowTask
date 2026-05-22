@@ -1,6 +1,7 @@
 import type { PrismaClient } from "@prisma/client";
 import prisma from "../prisma/client.js";
-import type { Usuario } from "../middleware/generated/prisma/browser.js";
+import type { Usuario } from "../prisma/generated/prisma/browser.js";
+
 
 
 export class UserRepository {
@@ -19,39 +20,39 @@ export class UserRepository {
     });
   }
 
-    async getUserId(id: number) {
-        return this.prisma.usuario.findUnique({
-            where: { 
-                id 
-            },
-            select: {
-                id: true,
-                email: true,
-                role: true
-            }   
-        });
-    }
+  async getUserId(id: number) {
+    return this.prisma.usuario.findUnique({
+      where: {
+        id
+      },
+      select: {
+        id: true,
+        email: true,
+        role: true
+      }
+    });
+  }
 
-    async createUser(data: Partial<Usuario>): Promise<Usuario> {
-        return this.prisma.usuario.create({
-            data: data as Usuario
-        });
-    }
+  async createUser(data: Partial<Usuario>): Promise<Usuario> {
+    return this.prisma.usuario.create({
+      data: data as Usuario
+    });
+  }
 
-    async updateUser(id: number, data: Partial<Usuario>){
-        return this.prisma.usuario.update({
-            where: {
-                id 
-            },
-            data,
-            select : {
-                id: true,
-                nome: true,
-                email: true,
-                role: true
-            }
-        });
-    }
-}    
+  async updateUser(id: number, data: Partial<Usuario>) {
+    return this.prisma.usuario.update({
+      where: {
+        id
+      },
+      data,
+      select: {
+        id: true,
+        nome: true,
+        email: true,
+        role: true
+      }
+    });
+  }
+}
 
 export const userRepository = new UserRepository(prisma);

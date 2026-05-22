@@ -1,5 +1,6 @@
-import type { TypePrioridade, TypeStatus } from "../middleware/generated/prisma/enums.js";
-import {taskRepository,type TaskRepository,} from "../repositories/taskRepository.js";
+import { historyService } from "../services/historyService.js";
+import {taskRepository, type TaskRepository} from "../repositories/taskRepository.js";
+import { TipoAcaoHistorico, TypePrioridade, TypeStatus } from "../prisma/generated/prisma/enums.js";
 
 
 type CriarTarefaData = {
@@ -19,7 +20,7 @@ type EditarTarefaData = {
 };
 
 export class TaskService {
-  constructor(private readonly taskRepository: TaskRepository) {}
+  constructor( private readonly taskRepository: TaskRepository) {}
 
   async getTasks(id: number) {
     return this.taskRepository.getTasks(id);
@@ -28,29 +29,101 @@ export class TaskService {
   async getTaskId(id: number, usuarioId: number) {
     const tarefa = await this.taskRepository.getTaskId(id);
 
-    if (!tarefa) throw new Error("Tarefa não encontrada");
-    if (tarefa.usuarioId !== usuarioId) throw new Error("Sem permissão");
+    if (!tarefa)
+      throw new Error("Tarefa não encontrada");
+
+    if (tarefa.usuarioId !== usuarioId)
+      throw new Error("Sem permissão");
 
     return tarefa;
   }
 
-  async createTask(data: CriarTarefaData, usuarioId: number) {
-    return this.taskRepository.createTask({ ...data, usuarioId });
+  async createTask( data: CriarTarefaData, usuarioId: number) {
+    const tarefa = await this.taskRepository.createTask({
+        ...data,
+        usuarioId,
+      });
+
+    await historyService.registrar({
+      acao: TipoAcaoHistorico.CRIACAO,
+      usuarioId,
+      tarefaId: tarefa.id,
+      descricao: "Tarefa criada",
+    });
+
+    return tarefa;
   }
 
-  async updateTask(id: number, data: EditarTarefaData, usuarioId: number) {
+  async updateTask(
+    id: number,
+    data: EditarTarefaData,
+    usuarioId: number
+  ) {
     await this.getTaskId(id, usuarioId);
-    return this.taskRepository.updateTask(id, data);
+
+    const tarefa =
+      await this.taskRepository.updateTask(
+        id,
+        data
+      );
+
+    await historyService.registrar({
+      acao: TipoAcaoHistorico.EDICAO,
+      usuarioId,
+      tarefaId: tarefa.id,
+      descricao: "Tarefa editada",
+    });
+
+    return tarefa;
   }
 
-  async updateStatus(id: number, status: TypeStatus, usuarioId: number) {
+  async updateStatus(
+    id: number,
+    status: TypeStatus,
+    usuarioId: number
+  ) {
     await this.getTaskId(id, usuarioId);
-    return this.taskRepository.updateStatus(id, status);
+
+    const tarefa =
+      await this.taskRepository.updateStatus(
+        id,
+        status
+      );
+
+    await historyService.registrar({
+      acao:
+        status === "CONCLUIDO"
+          ? TipoAcaoHistorico.CONCLUSAO
+          : TipoAcaoHistorico.REABERTURA,
+
+      usuarioId,
+
+      tarefaId: tarefa.id,
+
+      descricao:
+        status === "CONCLUIDO"
+          ? "Tarefa concluída"
+          : "Tarefa reaberta",
+    });
+
+    return tarefa;
   }
 
-  async deleteTask(id: number, usuarioId: number) {
+  async deleteTask(
+    id: number,
+    usuarioId: number
+  ) {
     await this.getTaskId(id, usuarioId);
+
+    await historyService.registrar({
+      acao: TipoAcaoHistorico.EXCLUSAO,
+      usuarioId,
+      tarefaId: id,
+      descricao: "Tarefa excluída",
+    });
+
     return this.taskRepository.deleteTask(id);
   }
 }
+
 export const taskService = new TaskService(taskRepository);

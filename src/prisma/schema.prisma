@@ -4,16 +4,16 @@
 // Get a free hosted Postgres database in seconds: `npx create-db`
 
 generator client {
-  provider = "prisma-client-js"
+  provider = "prisma-client"
+  output   = "../prisma/generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
 }
 
 enum TypePrioridade {
-  ADIAVEl
+  ADIAVEL
   NORMAL
   URGENTE
 }
@@ -33,6 +33,16 @@ enum TypeToken {
   ACCESS
   REFRESH
 }
+
+enum TipoAcaoHistorico {
+  CRIACAO
+  EDICAO
+  ATRIBUICAO
+  CONCLUSAO
+  REABERTURA
+  EXCLUSAO
+}
+
 
 model Usuario {
   id         Int       @id @default(autoincrement())
@@ -97,12 +107,18 @@ model Token {
 
 model HistoricoTarefa {
   id        Int      @id @default(autoincrement())
-  acao      String
+  acao      TipoAcaoHistorico
   timestamp DateTime @default(now())
 
   usuarioId Int
   tarefaId  Int
+  descricao String?
 
   usuario Usuario @relation(fields: [usuarioId], references: [id])
   tarefa  Tarefa  @relation(fields: [tarefaId], references: [id])
+
+  @@index([usuarioId])
+  @@index([tarefaId])
+
+  @@map("historico_tarefa")
 }

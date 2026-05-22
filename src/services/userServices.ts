@@ -7,7 +7,6 @@ export class UserService {
     async listUsers() {
         return this.userRepository.listUsers();
     }
-
     async getUserId(userId: number) {
         return this.userRepository.getUserId(userId);
     }

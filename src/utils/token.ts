@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
-import type { TipoConta } from "../middleware/generated/prisma/enums.js";
+import type { TipoConta } from "../prisma/generated/prisma/enums.js";
+
 
 
 

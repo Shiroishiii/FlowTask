@@ -387,7 +387,8 @@ export const ModelName = {
   Usuario: 'Usuario',
   Tarefa: 'Tarefa',
   Projeto: 'Projeto',
-  Token: 'Token'
+  Token: 'Token',
+  HistoricoTarefa: 'HistoricoTarefa'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -403,7 +404,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "usuario" | "tarefa" | "projeto" | "token"
+    modelProps: "usuario" | "tarefa" | "projeto" | "token" | "historicoTarefa"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -703,6 +704,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    HistoricoTarefa: {
+      payload: Prisma.$HistoricoTarefaPayload<ExtArgs>
+      fields: Prisma.HistoricoTarefaFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.HistoricoTarefaFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HistoricoTarefaPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.HistoricoTarefaFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HistoricoTarefaPayload>
+        }
+        findFirst: {
+          args: Prisma.HistoricoTarefaFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HistoricoTarefaPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.HistoricoTarefaFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HistoricoTarefaPayload>
+        }
+        findMany: {
+          args: Prisma.HistoricoTarefaFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HistoricoTarefaPayload>[]
+        }
+        create: {
+          args: Prisma.HistoricoTarefaCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HistoricoTarefaPayload>
+        }
+        createMany: {
+          args: Prisma.HistoricoTarefaCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.HistoricoTarefaCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HistoricoTarefaPayload>[]
+        }
+        delete: {
+          args: Prisma.HistoricoTarefaDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HistoricoTarefaPayload>
+        }
+        update: {
+          args: Prisma.HistoricoTarefaUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HistoricoTarefaPayload>
+        }
+        deleteMany: {
+          args: Prisma.HistoricoTarefaDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.HistoricoTarefaUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.HistoricoTarefaUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HistoricoTarefaPayload>[]
+        }
+        upsert: {
+          args: Prisma.HistoricoTarefaUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HistoricoTarefaPayload>
+        }
+        aggregate: {
+          args: Prisma.HistoricoTarefaAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateHistoricoTarefa>
+        }
+        groupBy: {
+          args: Prisma.HistoricoTarefaGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HistoricoTarefaGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.HistoricoTarefaCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HistoricoTarefaCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -747,7 +822,8 @@ export const UsuarioScalarFieldEnum = {
   nome: 'nome',
   email: 'email',
   senha: 'senha',
-  tipo_conta: 'tipo_conta'
+  role: 'role',
+  criado_em: 'criado_em'
 } as const
 
 export type UsuarioScalarFieldEnum = (typeof UsuarioScalarFieldEnum)[keyof typeof UsuarioScalarFieldEnum]
@@ -760,8 +836,8 @@ export const TarefaScalarFieldEnum = {
   data_vencimento: 'data_vencimento',
   prioridade: 'prioridade',
   status: 'status',
-  usuarioId: 'usuarioId',
-  projetoId: 'projetoId'
+  projetoId: 'projetoId',
+  criado_em: 'criado_em'
 } as const
 
 export type TarefaScalarFieldEnum = (typeof TarefaScalarFieldEnum)[keyof typeof TarefaScalarFieldEnum]
@@ -771,7 +847,8 @@ export const ProjetoScalarFieldEnum = {
   id: 'id',
   titulo: 'titulo',
   area_de_conhecimento: 'area_de_conhecimento',
-  metas_projeto: 'metas_projeto',
+  descricao: 'descricao',
+  objetivo: 'objetivo',
   usuarioId: 'usuarioId'
 } as const
 
@@ -788,6 +865,18 @@ export const TokenScalarFieldEnum = {
 } as const
 
 export type TokenScalarFieldEnum = (typeof TokenScalarFieldEnum)[keyof typeof TokenScalarFieldEnum]
+
+
+export const HistoricoTarefaScalarFieldEnum = {
+  id: 'id',
+  acao: 'acao',
+  timestamp: 'timestamp',
+  usuarioId: 'usuarioId',
+  tarefaId: 'tarefaId',
+  descricao: 'descricao'
+} as const
+
+export type HistoricoTarefaScalarFieldEnum = (typeof HistoricoTarefaScalarFieldEnum)[keyof typeof HistoricoTarefaScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -926,6 +1015,20 @@ export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
 
 
 /**
+ * Reference to a field of type 'TipoAcaoHistorico'
+ */
+export type EnumTipoAcaoHistoricoFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipoAcaoHistorico'>
+    
+
+
+/**
+ * Reference to a field of type 'TipoAcaoHistorico[]'
+ */
+export type ListEnumTipoAcaoHistoricoFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipoAcaoHistorico[]'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -1052,6 +1155,7 @@ export type GlobalOmitConfig = {
   tarefa?: Prisma.TarefaOmit
   projeto?: Prisma.ProjetoOmit
   token?: Prisma.TokenOmit
+  historicoTarefa?: Prisma.HistoricoTarefaOmit
 }
 
 /* Types for Logging */
