@@ -1,21 +1,26 @@
 import type { Request, Response } from "express";
+import { HistoryService, historyService } from "../services/historyService.js";
 
-import historyService from "../services/historyService.js";
 
-class HistoryController {
-  async getTaskHistory(
-    req: Request,
-    res: Response
-  ) {
-    const tarefaId = Number(req.params.id);
+export class HistoryController {
+  constructor(private historyService: HistoryService) { }
 
-    const historico =
-      await historyService.buscarPorTarefa(
-        tarefaId
-      );
+  
 
-    return res.json(historico);
+
+
+  getTaskHistory = async (req: Request, res: Response) => {
+    try {
+      const tarefaId = Number(req.params.id);
+      const historico = await this.historyService.getTaskHistory(tarefaId)
+      return res.status(201).json(historico)
+    } catch (error) {
+      return res.status(400).json({
+        error: (error)
+      });
+    }
   }
+
 }
 
-export default new HistoryController();
+export const historyController = new HistoryController(historyService);

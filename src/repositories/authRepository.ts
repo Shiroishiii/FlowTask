@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import type { NextFunction } from "express";
-import prisma from "../../prisma/client.js";
+import prisma from "../prisma/client.js";
+
 
 
 

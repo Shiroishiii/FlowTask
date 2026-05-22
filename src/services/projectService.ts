@@ -1,5 +1,5 @@
-import type { Projeto } from "@prisma/client";
 
+import type { Projeto } from "../prisma/generated/prisma/browser.js";
 import {
     ProjectRepository,
     projectRepository
@@ -61,5 +61,4 @@ export class ProjectService {
 
 }
 
-export const projectService =
-    new ProjectService(projectRepository);
+export const projectService = new ProjectService(projectRepository);
