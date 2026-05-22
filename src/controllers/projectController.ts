@@ -1,7 +1,6 @@
 import type { Request, Response } from "express";
-import type { Projeto } from "@prisma/client";
-
 import {ProjectService,projectService} from "../services/projectService.js";
+import type { Projeto } from "../prisma/generated/prisma/browser.js";
 
 class ProjectController {
 

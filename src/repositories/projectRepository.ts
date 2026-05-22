@@ -1,10 +1,10 @@
 import type { PrismaClient } from "@prisma/client";
-import prisma from "../prisma/client.js";
 import type { Projeto } from "../prisma/generated/prisma/browser.js";
+import { prisma } from "../prisma/prisma.js";
 
-  export class ProjectRepository {
+export class ProjectRepository {
 
-    constructor(private readonly prisma: PrismaClient) {}
+    constructor(private readonly prisma: PrismaClient) { }
 
     async listaProjects(): Promise<Projeto[]> {
 

@@ -1,4 +1,3 @@
-import prisma from "../prisma/client.js";
 import type { TipoAcaoHistorico } from "../prisma/generated/prisma/enums.js";
 import { historyRepository, type HistoryRepository } from "../repositories/historyRepository.js";
 

@@ -1,10 +1,9 @@
 import type { Request, Response } from "express";
-import { PrismaClient } from "@prisma/client";
 import { UserRepository } from "../repositories/userRepository.js";
 import { AuthRepository } from "../repositories/authRepository.js";
 import { AuthService } from "../services/authService.js";
+import { prisma } from "../prisma/prisma.js";
 
-const prisma = new PrismaClient();
 
 const userRepository = new UserRepository(prisma);
 const authRepository = new AuthRepository(prisma);
