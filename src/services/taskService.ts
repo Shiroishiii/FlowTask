@@ -1,15 +1,7 @@
-import {
-  taskRepository,
-  type TaskRepository,
-} from "../repositories/taskRepository.js";
+import { historyService } from "../services/historyService.js";
+import {taskRepository, type TaskRepository} from "../repositories/taskRepository.js";
+import { TipoAcaoHistorico, TypePrioridade, TypeStatus } from "../prisma/generated/prisma/enums.js";
 
-import historyService from "./historyService.js";
-
-import {
-  TipoAcaoHistorico,
-  type TypeStatus,
-  type TypePrioridade,
-} from "@prisma/client";
 
 type CriarTarefaData = {
   titulo: string;
@@ -28,9 +20,7 @@ type EditarTarefaData = {
 };
 
 export class TaskService {
-  constructor(
-    private readonly taskRepository: TaskRepository
-  ) {}
+  constructor( private readonly taskRepository: TaskRepository) {}
 
   async getTasks(id: number) {
     return this.taskRepository.getTasks(id);
@@ -48,12 +38,8 @@ export class TaskService {
     return tarefa;
   }
 
-  async createTask(
-    data: CriarTarefaData,
-    usuarioId: number
-  ) {
-    const tarefa =
-      await this.taskRepository.createTask({
+  async createTask( data: CriarTarefaData, usuarioId: number) {
+    const tarefa = await this.taskRepository.createTask({
         ...data,
         usuarioId,
       });
@@ -140,5 +126,4 @@ export class TaskService {
   }
 }
 
-export const taskService =
-  new TaskService(taskRepository);
+export const taskService = new TaskService(taskRepository);

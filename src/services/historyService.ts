@@ -1,5 +1,6 @@
-import { TipoAcaoHistorico } from "@prisma/client";
-import historyRepository from "../repositories/historyRepository";
+import prisma from "../prisma/client.js";
+import type { TipoAcaoHistorico } from "../prisma/generated/prisma/enums.js";
+import { historyRepository, type HistoryRepository } from "../repositories/historyRepository.js";
 
 interface RegisterHistoryDTO {
   acao: TipoAcaoHistorico;
@@ -7,8 +8,9 @@ interface RegisterHistoryDTO {
   tarefaId: number;
   descricao?: string;
 }
-
-class HistoryService {
+export class HistoryService {
+  constructor( private historyRepository: HistoryRepository){}
+  
   async registrar(data: RegisterHistoryDTO) {
     return historyRepository.create(data);
   }
@@ -16,6 +18,9 @@ class HistoryService {
   async buscarPorTarefa(tarefaId: number) {
     return historyRepository.findByTaskId(tarefaId);
   }
+  async getTaskHistory( tarefaId: number){
+    return historyRepository.getTaskHistory(tarefaId)
+  }
 }
 
-export default new HistoryService();
+export const historyService = new HistoryService(historyRepository);

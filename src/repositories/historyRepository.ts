@@ -1,14 +1,17 @@
-import prisma from "../prisma/client";
-import { TipoAcaoHistorico } from "@prisma/client";
+import type { PrismaClient } from "@prisma/client";
+import  TipoAcaoHistorico from "@prisma/client";
+import prisma from "../prisma/client.js";
 
 interface CreateHistoryDTO {
-  acao: TipoAcaoHistorico;
   usuarioId: number;
   tarefaId: number;
   descricao?: string;
 }
 
-class HistoryRepository {
+export class HistoryRepository {
+    constructor(private readonly prisma: PrismaClient) {
+    this.prisma = prisma;
+  }
   async create(data: CreateHistoryDTO) {
     return prisma.historicoTarefa.create({
       data,
@@ -34,6 +37,14 @@ class HistoryRepository {
       },
     });
   }
+  async getTaskHistory(tarefaId: Number){
+    return this.prisma.history.findUnique({
+      where: {
+        tarefaId
+      }
+    })
+  }
+
 }
 
-export default new HistoryRepository();
+export const historyRepository = new HistoryRepository(prisma);

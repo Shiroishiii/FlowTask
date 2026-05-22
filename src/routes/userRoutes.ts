@@ -2,7 +2,9 @@ import { Router } from "express";
 import { userController } from "../controllers/userController.js";
 import { auth } from "../middleware/authMiddleware.js";
 import { roleMiddleware } from "../middleware/roleMiddleware.js";
-import { TipoConta } from "@prisma/client";
+import { TipoConta } from "../prisma/generated/prisma/enums.js";
+
+
 
 export const usuarioRouter = Router();
 
