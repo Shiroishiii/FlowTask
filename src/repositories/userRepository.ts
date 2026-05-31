@@ -1,6 +1,6 @@
 import type { PrismaClient } from "@prisma/client";
-import prisma from "../prisma/client.js";
 import type { Usuario } from "../prisma/generated/prisma/browser.js";
+import { prisma } from "../prisma/prisma.js";
 
 
 

@@ -1,6 +1,6 @@
 import type { PrismaClient } from "@prisma/client";
-import  TipoAcaoHistorico from "@prisma/client";
-import prisma from "../prisma/client.js";
+import { prisma } from "../prisma/prisma.js";
+// import  TipoAcaoHistorico from "@prisma/client";
 
 interface CreateHistoryDTO {
   usuarioId: number;
